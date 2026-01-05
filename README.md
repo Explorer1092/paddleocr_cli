@@ -2,26 +2,50 @@
 
 A command-line tool for OCR using PaddleOCR AI Studio API.
 
+Available in both **Go** (native binary) and **Python** versions.
+
 ## Installation
 
-### Using Poetry (Development)
+### Go Version (Recommended)
+
+#### Download Binary
+
+Download the latest release from [GitHub Releases](https://github.com/Explorer1092/paddleocr_cli/releases).
+
+#### Using Homebrew (macOS/Linux)
 
 ```bash
-git clone https://github.com/Explorer1092/paddleocr-cli.git
-cd paddleocr-cli
-poetry install
+brew install Explorer1092/tap/paddleocr-cli
 ```
 
-### Using pip
+#### Build from Source
+
+```bash
+git clone https://github.com/Explorer1092/paddleocr_cli.git
+cd paddleocr_cli
+go build -o paddleocr-cli ./cmd/paddleocr-cli
+```
+
+### Python Version
+
+#### Using pip
 
 ```bash
 pip install paddleocr-cli
 ```
 
-### Using uv
+#### Using uv
 
 ```bash
 uv pip install paddleocr-cli
+```
+
+#### Using Poetry (Development)
+
+```bash
+git clone https://github.com/Explorer1092/paddleocr_cli.git
+cd paddleocr_cli
+poetry install
 ```
 
 ## Quick Start
@@ -30,37 +54,37 @@ uv pip install paddleocr-cli
 
 ```bash
 # Configure (default saves to user directory)
-paddleocr_cli configure --server-url https://your-server.com --token YOUR_TOKEN
+paddleocr-cli configure --server-url https://your-server.com --token YOUR_TOKEN
 
 # Configure with scope
-paddleocr_cli configure --server-url URL --token TOKEN -s project  # project root
-paddleocr_cli configure --server-url URL --token TOKEN -s local    # script directory
-paddleocr_cli configure --server-url URL --token TOKEN -s user     # ~/.config/ (default)
+paddleocr-cli configure --server-url URL --token TOKEN -s project  # project root
+paddleocr-cli configure --server-url URL --token TOKEN -s local    # current directory
+paddleocr-cli configure --server-url URL --token TOKEN -s user     # ~/.config/ (default)
 
 # Verify configuration
-paddleocr_cli configure --show
+paddleocr-cli configure --show
 
 # Test connection
-paddleocr_cli configure --test
+paddleocr-cli configure --test
 ```
 
 ### 2. Run OCR
 
 ```bash
 # Output to stdout
-paddleocr_cli resume.pdf
+paddleocr-cli resume.pdf
 
 # Output to file
-paddleocr_cli resume.pdf -o output.md
+paddleocr-cli resume.pdf -o output.md
 
 # Output as JSON
-paddleocr_cli resume.pdf --json
+paddleocr-cli resume.pdf --json
 ```
 
 ## Usage
 
 ```
-paddleocr_cli [OPTIONS] FILE
+paddleocr-cli [OPTIONS] FILE
 
 positional arguments:
   FILE                  Path to PDF or image file
@@ -81,7 +105,7 @@ options:
 ### Configure subcommand
 
 ```
-paddleocr_cli configure [OPTIONS]
+paddleocr-cli configure [OPTIONS]
 
 options:
   --server-url URL      Set the server URL (required)
@@ -89,7 +113,7 @@ options:
   -s, --scope SCOPE     Installation scope (default: user)
                         user    - ~/.config/paddleocr_cli/
                         project - project root (alongside .claude/)
-                        local   - script directory
+                        local   - current directory
   --show                Show current configuration
   --test                Test connection to the server
   --locations           Show config file search locations
@@ -99,7 +123,7 @@ options:
 
 Configuration is stored in YAML format (`.paddleocr_cli.yaml`). The tool searches for config files in this order:
 
-1. **Script directory**: `./.paddleocr_cli.yaml`
+1. **Current directory**: `./.paddleocr_cli.yaml`
 2. **Project root**: `<project>/.paddleocr_cli.yaml` (alongside `.claude/` directory)
 3. **User directory**: `~/.config/paddleocr_cli/config.yaml`
 
@@ -111,22 +135,9 @@ paddleocr:
   access_token: "your_token_here"
 ```
 
-## Running as a module
+## Python API
 
-```bash
-# Using python -m
-python -m paddleocr_cli resume.pdf
-
-# Using poetry
-poetry run paddleocr_cli resume.pdf
-
-# Using uv
-uv run paddleocr_cli resume.pdf
-```
-
-## API
-
-You can also use the library programmatically:
+You can also use the Python library programmatically:
 
 ```python
 from paddleocr_cli import PaddleOCRClient, Config, PaddleOCRConfig
@@ -152,6 +163,19 @@ if result.success:
         print(f"Page {page.page_index}: {len(page.markdown)} chars")
 else:
     print(f"Error: {result.error_message}")
+```
+
+## Running Python version as a module
+
+```bash
+# Using python -m
+python -m paddleocr_cli resume.pdf
+
+# Using poetry
+poetry run paddleocr-cli resume.pdf
+
+# Using uv
+uv run paddleocr-cli resume.pdf
 ```
 
 ## License
