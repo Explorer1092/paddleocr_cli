@@ -27,7 +27,8 @@ builds:
 
 archives:
   - id: default
-    format: tar.gz
+    formats:
+      - tar.gz
     name_template: >-
       {{ .ProjectName }}_
       {{- .Version }}_
@@ -35,7 +36,8 @@ archives:
       {{- .Arch }}
     format_overrides:
       - goos: windows
-        format: zip
+        formats:
+          - zip
     files:
       - LICENSE
       - README.md
@@ -61,19 +63,3 @@ release:
   draft: false
   prerelease: auto
   name_template: "{{.ProjectName}} v{{.Version}}"
-
-brews:
-  - name: paddleocr-cli
-    repository:
-      owner: Explorer1092
-      name: homebrew-tap
-      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
-    skip_upload: auto
-    directory: Formula
-    homepage: "https://github.com/Explorer1092/paddleocr_cli"
-    description: "A command-line tool for OCR using PaddleOCR AI Studio API"
-    license: "MIT"
-    install: |
-      bin.install "paddleocr-cli"
-    test: |
-      system "#{bin}/paddleocr-cli", "--version"
