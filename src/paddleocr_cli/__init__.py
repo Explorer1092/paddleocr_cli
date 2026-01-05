@@ -7,14 +7,15 @@ Usage:
     paddleocr_cli configure           # Configure credentials
 """
 
-__version__ = "0.1.0"
-__author__ = "AI Interview Assistant"
+__version__ = "0.0.0"  # Managed by poetry-dynamic-versioning
+__author__ = "PaddleOCR"
 
-from .config import Config, find_config, load_config, save_config
+from .config import Config, PaddleOCRConfig, find_config, load_config, save_config
 from .ocr import PaddleOCRClient
 
 __all__ = [
     "Config",
+    "PaddleOCRConfig",
     "PaddleOCRClient",
     "find_config",
     "load_config",

@@ -7,7 +7,8 @@ A command-line tool for OCR using PaddleOCR AI Studio API.
 ### Using Poetry (Development)
 
 ```bash
-cd .claude/skills/recruitment-analyzer/scripts/
+git clone https://github.com/Explorer1092/paddleocr-cli.git
+cd paddleocr-cli
 poetry install
 ```
 
