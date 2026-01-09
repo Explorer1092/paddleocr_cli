@@ -26,12 +26,28 @@ builds:
       - -X main.date={{.Date}}
 
 archives:
-  - id: default
+  # 带版本号的归档（用于版本追踪）
+  - id: versioned
     formats:
       - tar.gz
     name_template: >-
       {{ .ProjectName }}_
       {{- .Version }}_
+      {{- .Os }}_
+      {{- .Arch }}
+    format_overrides:
+      - goos: windows
+        formats:
+          - zip
+    files:
+      - LICENSE
+      - README.md
+  # 不带版本号的归档（方便安装脚本使用 latest URL）
+  - id: latest
+    formats:
+      - tar.gz
+    name_template: >-
+      {{ .ProjectName }}_
       {{- .Os }}_
       {{- .Arch }}
     format_overrides:
